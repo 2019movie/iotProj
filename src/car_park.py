@@ -24,5 +24,5 @@ class CarPark:
       return f"Car park location ({str(self.location)}), capacity ({str(self.capacity)}). Has {str(len(self.displays))} display and {str(len(self.sensors))} sensors"
 
 if __name__ == "__main__":
-   carpark = CarPark("City", 100)
-   print(carpark)
+   carpark1 = CarPark("City", 100)
+   print(carpark1)
