@@ -35,13 +35,20 @@ class CarPark:
          self.displays.append(component)
 
    def add_car(self, number_plate):
-      pass
+      self.plates.append(number_plate)
+      self.update_displays()
 
    def remove_car(self, number_plate):
-      pass
+      try:
+         self.plates.remove(number_plate)
+         self.update_displays()
+      except ValueError:
+         return f"{number_plate} not found in the plates list."
 
-   def update_display(self):
-      pass
+   def update_displays(self):
+      for each_display in self.displays:
+         each_display.update(f"Remaining car bays: {str(len(self.plates)-self.capacity)}")
+      # Todo: new display message  "Remaining car bays:  current time:  current temperature: "
 
 if __name__ == "__main__":
    carpark1 = CarPark("City", 100)

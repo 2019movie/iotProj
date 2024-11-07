@@ -18,6 +18,10 @@ class Display:
     def __str__(self):
         return f'Display id: {str(self.id)}, message: {str(self.message)}, it is currently on: {str(self.is_on)}, part of {str(self.car_park)}'
 
+    def update(self, message):
+        self.is_on = True
+        self.message = message
+
 if __name__ == "__main__":
     carpark1 = CarPark("City", 100)
     display1 = Display(carpark1, 1, "Hello World")
