@@ -1,17 +1,19 @@
 from car_park import CarPark
 class Display:
-    def __init__(self, car_park, id, message=None):
+    def __init__(self, car_park, id, message=None, is_on=False):
         self.car_park = car_park
 
         if id is not None and isinstance(id, int):
             self.id = id
+        else:
+            self.id = 0
 
         self.message = ""
         if message is not None and len(message) > 0:
             self.message = message
-            self.is_on = True
-        else:
-            self.is_on = False
+
+        self.is_on = is_on
+
 
     def __str__(self):
         return f'Display id: {str(self.id)}, message: {str(self.message)}, it is currently on: {str(self.is_on)}, part of {str(self.car_park)}'
