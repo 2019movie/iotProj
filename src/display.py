@@ -28,6 +28,8 @@ class Display:
             if key == "temperature":
                 self.message = self.message + f" Temperature is: {value}"
 
+    def get_message_on_display(self):
+        return self.message
 
 if __name__ == "__main__":
     print(f'This is display class')

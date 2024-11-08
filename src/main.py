@@ -4,6 +4,7 @@ from display import Display
 
 if __name__ == '__main__':
     car_park_moondalup = CarPark("Moondalup",100, log_file="moondalup.txt")
+    car_park_moondalup.write_config()
     sensor_entry = EntrySensor(car_park_moondalup, 1, True)
     sensor_exit = ExitSensor(car_park_moondalup,2, True)
     display_moondalup = Display(car_park_moondalup, 1, message="Welcome to Moondalup", is_on=True)
@@ -13,5 +14,8 @@ if __name__ == '__main__':
     print(car_park_moondalup)
     for car_number in range(10):
         sensor_entry.detect_vehicle()
+        print(f"    ->{display_moondalup.get_message_on_display()}<-")
     for car_number in range(2):
         sensor_exit.detect_vehicle()
+        display_moondalup.message
+        print(f"    <-{display_moondalup.get_message_on_display()}->")
