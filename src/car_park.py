@@ -3,11 +3,16 @@ from display import Display
 from car import Car
 import datetime
 import random
+from pathlib import Path
 
 
 class CarPark:
-   def __init__(self, location, capacity, sensors=None, displays=None):
+   def __init__(self, location, capacity, sensors=None, displays=None, log_file="log.txt"):
       self.location = "Unknown"
+      if log_file is not None and len(log_file) > 0:
+         self.log_file = Path(log_file)
+         self.add_log()
+
       if location is not None and len(location) > 0:
          self.location = location
 
@@ -29,6 +34,15 @@ class CarPark:
    def __str__(self):
       return f"Car park location ({str(self.location)}), capacity ({str(self.capacity)}). Has {str(len(self.displays))} display and {str(len(self.sensors))} sensors"
 
+   def add_log(self, message=""):
+      if len(message) > 0:
+         with self.log_file.open('a') as file:
+            file.write(f"\n{message}")
+
+   def tearDown(self):
+      # Cleanup: remove the log file after the test
+      self.log_file.unlink(missing_ok=True)
+
    def register(self, component):
       #method allow car park to register sensors and displays
       if not isinstance(component, (Sensor, Display)):
@@ -47,6 +61,7 @@ class CarPark:
          new_car = Car(number_plate, current_datetime)
          self.cars.append(new_car)
       self.update_displays()
+      self.add_log(f"{number_plate} enter carpark at {current_datetime.strftime('%A, %B %d, %Y at %I:%M %p')}")
 
 
    def remove_car(self, plate_number):
@@ -94,6 +109,8 @@ class CarPark:
        for each_display in self.displays:
            each_display.update(data)
 
+
+
 if __name__ == "__main__":
    carpark1 = CarPark("City", 100)
    #print(carpark1)
@@ -109,8 +126,8 @@ if __name__ == "__main__":
    print(carpark1)
 
    #carpark1.add_car("aa1234")
-   # # carpark1.add_car("cc6778")
-   # # carpark1.add_car("bb333")
+   carpark1.add_car("cc6778")
+   carpark1.add_car("bb333")
    # sensor_in.detect_vehicle()
    # sensor_in.detect_vehicle()
    # sensor_in.detect_vehicle()
@@ -131,6 +148,7 @@ if __name__ == "__main__":
    #
    # print(f'random pick: {random.choice(carpark1.plates)}')
 
-   carpark1.remove_car("test")
+   carpark1.add_log()
+   carpark1.tearDown()
 
    print(f'===end of test===')
