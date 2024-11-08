@@ -18,5 +18,18 @@ class TestDisplay(unittest.TestCase):
 
     def test_EntrySensor_detect_vehicle(self):
         self.sensor_entry.detect_vehicle()
-        pass
+        self.assertEqual(len(self.car_park.plates),1)
+        self.assertIsInstance(self.car_park.plates[0], str)
 
+    def test_ExitSensor_initialized_with_all_attributes(self):
+        self.assertIsInstance(self.sensor_exit, ExitSensor)
+        self.assertEqual(self.sensor_exit.id,2)
+        self.assertEqual(self.sensor_exit.is_active, True)
+        self.assertIsInstance(self.car_park, CarPark)
+
+    def test_ExitSensor_detect_vehicle(self):
+        self.sensor_entry.detect_vehicle()
+        self.sensor_entry.detect_vehicle()
+        self.assertEqual(len(self.car_park.plates),2)
+        self.sensor_exit.detect_vehicle()
+        self.assertEqual(len(self.car_park.plates),1)
