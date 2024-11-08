@@ -7,11 +7,12 @@ from pathlib import Path
 
 class CarPark:
    def __init__(self, location, capacity
-                , log_file="log.txt"
+                , log_file=Path("log.txt")
                 , sensors=None, displays=None):
+      self.log_file = log_file if isinstance(log_file, Path) else Path(log_file)
+      self.log_file.touch(exist_ok=True)
       self.location = "Unknown"
-      self.log_file = Path(log_file)
-      self.add_log()
+      #self.add_log()
 
       if location is not None and len(location) > 0:
          self.location = location
@@ -115,8 +116,9 @@ class CarPark:
 
 
 if __name__ == "__main__":
-   carpark1 = CarPark("City", 100,
+   carpark2 = CarPark("City", 100,
                       log_file ="log_3.txt")
+   carpark1 = CarPark("City", 100)
    #print(carpark1)
    display1 = Display(carpark1, 1, "Hello World")
    #print(display1)
