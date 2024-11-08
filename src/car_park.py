@@ -52,14 +52,6 @@ class CarPark:
          config = json.load(f)
       return cls(config["location"], config["capacity"], log_file=config["log_file"])
 
-   def add_log(self, message=""):
-      if len(message) > 0:
-         with self.log_file.open('a') as file:
-            file.write(f"{message}")
-      else:
-         with self.log_file.open('a') as file:
-            file.write(f"")
-
    def _log_car_activity(self, plate, action):
       current_datetime = datetime.datetime.now()
       with self.log_file.open("a") as file:
@@ -118,11 +110,6 @@ class CarPark:
      else:
         return 0
 
-   def remaining_car_bays(self):
-     if self.capacity >= len(self.plates):
-        return self.capacity - len(self.plates)
-     else:
-        return 0
 
    def update_displays(self):
        current_datetime = datetime.datetime.now()
