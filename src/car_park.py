@@ -2,6 +2,7 @@ from sensor import Sensor, ExitSensor, EntrySensor
 from display import Display
 from car import Car
 import datetime
+import random
 
 
 class CarPark:
@@ -60,6 +61,7 @@ class CarPark:
       except ValueError:
          return f"{plate_number} not found in the plates list."
 
+
    def is_plate_in_carpark(self, plate_number):
       #Method to check if a car's plate number is already in the list.
       if plate_number in self.plates:
@@ -97,26 +99,36 @@ if __name__ == "__main__":
    #print(carpark1)
    display1 = Display(carpark1, 1, "Hello World")
    #print(display1)
-   sensor2 = EntrySensor(carpark1, 2, True)
-   sensor3 = ExitSensor(carpark1, 3, True)
+   sensor_in = EntrySensor(carpark1, 2, True)
+   sensor_out = ExitSensor(carpark1, 3, True)
    carpark1.register(display1)
    print(carpark1)
-   carpark1.register(sensor2)
+   carpark1.register(sensor_in)
    print(carpark1)
-   carpark1.register(sensor3)
+   carpark1.register(sensor_out)
    print(carpark1)
 
-   carpark1.add_car("aa1234")
-   carpark1.add_car("bb333")
+   # carpark1.add_car("aa1234")
+   # carpark1.add_car("cc6778")
+   # carpark1.add_car("bb333")
+   sensor_in.detect_vehicle()
+   sensor_in.detect_vehicle()
+   sensor_in.detect_vehicle()
+   sensor_in.detect_vehicle()
    print(f'remaining car bay: {carpark1.remaining_car_bays()}')
-   carpark1.add_car("bb333")
+   #carpark1.add_car("bb333")
+   sensor_in.detect_vehicle()
    print(f'Car "bb333" in carpark: {carpark1.is_plate_in_carpark("bb333")}')
-
+   sensor_out.detect_vehicle()
    print(f'remaining car bay: {carpark1.remaining_car_bays()}')
-   print(f"aa1234 remove")
-   carpark1.remove_car("aa1234")
+   sensor_out.detect_vehicle()
+   sensor_out.detect_vehicle()
+   sensor_out.detect_vehicle()
    print(f'remaining car bay: {carpark1.remaining_car_bays()}')
+   sensor_out.detect_vehicle()
 
    print(f'available_bays: {carpark1.available_bays}')
+
+   print(f'random pick: {random.choice(carpark1.plates)}')
 
    print(f'===end of test===')
