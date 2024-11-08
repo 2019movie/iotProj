@@ -42,7 +42,7 @@ class CarPark:
       '''method will call when car enters the car park. It record the plate number and update display'''
       if (not self.is_plate_in_carpark(number_plate)):
          self.plates.append(number_plate)
-         current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+         current_datetime = datetime.datetime.now()
          new_car = Car(number_plate, current_datetime)
          self.cars.append(new_car)
       self.update_displays()
@@ -54,7 +54,8 @@ class CarPark:
          self.plates.remove(plate_number)
          for car in self.cars:
             if car.plate_number == plate_number:
-                self.cars.remove(car)
+               print(f'{car} leavning carpark.')
+               self.cars.remove(car)
          self.update_displays()
       except ValueError:
          return f"{number_plate} not found in the plates list."
@@ -65,6 +66,13 @@ class CarPark:
          return True  # Plate is already in the list
       else:
          return False  # Plate is not in the list
+
+   @property
+   def available_bays(self):
+     if self.capacity >= len(self.plates):
+        return (self.capacity - len(self.plates))
+     else:
+        return 0
 
    def remaining_car_bays(self):
      if self.capacity >= len(self.plates):
@@ -102,6 +110,6 @@ if __name__ == "__main__":
    carpark1.remove_car("aa1234")
    print(f'remaining car bay: {carpark1.remaining_car_bays()}')
 
-
+   print(f'available_bays: {carpark1.available_bays}')
 
    print(f'===end of test===')
