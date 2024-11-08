@@ -88,6 +88,16 @@ class TestCarPark(unittest.TestCase):
             line = file.readlines()
         self.assertEqual('{"location": "Mooning place", "capacity": 34, "log_file": "test_log.txt"}',line[0])
 
+    def test_from_config(self):
+        new_carpark = CarPark("Mooning place test"
+                              , 45
+                              , log_file = self.test_log_file)
+        new_carpark.write_config()
+        carpark_from_config = CarPark.from_config(new_carpark.config_file)
+        self.assertEqual(carpark_from_config.location, "Mooning place test")
+        self.assertEqual(carpark_from_config.capacity, 45)
+        self.assertEqual(str(carpark_from_config.log_file),self.test_log_file)
+
 
     def test_tear_down(self):
         # Remove the log file after the test

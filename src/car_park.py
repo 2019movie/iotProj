@@ -44,6 +44,14 @@ class CarPark:
          json.dump({"location": self.location,
                     "capacity": self.capacity,
                     "log_file": str(self.log_file)}, file)
+
+   @classmethod
+   def from_config(cls, config_file=Path("config.json")):
+      config_file = config_file if isinstance(config_file, Path) else Path(config_file)
+      with config_file.open() as f:
+         config = json.load(f)
+      return cls(config["location"], config["capacity"], log_file=config["log_file"])
+
    def add_log(self, message=""):
       if len(message) > 0:
          with self.log_file.open('a') as file:
