@@ -20,7 +20,10 @@ class Display:
 
     def update(self, data):
         self.is_on = True
+        self.message = ""
         for key, value in data.items():
+            if key == "message":
+                self.message = self.message + value
             if key == "available_bays":
                 self.message = self.message + f" Available bays: {value}"
             if key == "temperature":
