@@ -53,3 +53,10 @@ class CarPark:
 if __name__ == "__main__":
    carpark1 = CarPark("City", 100)
    print(carpark1)
+   display1 = Display(carpark1, 1, "Hello World")
+   print(display1)
+   sensor2 = EntrySensor(carpark1, 2, True)
+   print(sensor2)
+   sensor3 = ExitSensor(carpark1, 3, True)
+   print(sensor3)
+   print(f'===end of test===')
