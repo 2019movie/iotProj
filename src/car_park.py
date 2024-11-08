@@ -59,6 +59,7 @@ class CarPark:
                self.cars.remove(car)
          self.update_displays()
       except ValueError:
+         print("Value Error in remove_car")
          return f"{plate_number} not found in the plates list."
 
 
@@ -108,27 +109,29 @@ if __name__ == "__main__":
    carpark1.register(sensor_out)
    print(carpark1)
 
-   # carpark1.add_car("aa1234")
-   # carpark1.add_car("cc6778")
-   # carpark1.add_car("bb333")
-   sensor_in.detect_vehicle()
-   sensor_in.detect_vehicle()
-   sensor_in.detect_vehicle()
-   sensor_in.detect_vehicle()
-   print(f'remaining car bay: {carpark1.remaining_car_bays()}')
-   #carpark1.add_car("bb333")
-   sensor_in.detect_vehicle()
-   print(f'Car "bb333" in carpark: {carpark1.is_plate_in_carpark("bb333")}')
-   sensor_out.detect_vehicle()
-   print(f'remaining car bay: {carpark1.remaining_car_bays()}')
-   sensor_out.detect_vehicle()
-   sensor_out.detect_vehicle()
-   sensor_out.detect_vehicle()
-   print(f'remaining car bay: {carpark1.remaining_car_bays()}')
-   sensor_out.detect_vehicle()
+   #carpark1.add_car("aa1234")
+   # # carpark1.add_car("cc6778")
+   # # carpark1.add_car("bb333")
+   # sensor_in.detect_vehicle()
+   # sensor_in.detect_vehicle()
+   # sensor_in.detect_vehicle()
+   # sensor_in.detect_vehicle()
+   # print(f'remaining car bay: {carpark1.remaining_car_bays()}')
+   # #carpark1.add_car("bb333")
+   # sensor_in.detect_vehicle()
+   # print(f'Car "bb333" in carpark: {carpark1.is_plate_in_carpark("bb333")}')
+   # sensor_out.detect_vehicle()
+   # print(f'remaining car bay: {carpark1.remaining_car_bays()}')
+   # sensor_out.detect_vehicle()
+   # sensor_out.detect_vehicle()
+   # sensor_out.detect_vehicle()
+   # print(f'remaining car bay: {carpark1.remaining_car_bays()}')
+   # sensor_out.detect_vehicle()
+   #
+   # print(f'available_bays: {carpark1.available_bays}')
+   #
+   # print(f'random pick: {random.choice(carpark1.plates)}')
 
-   print(f'available_bays: {carpark1.available_bays}')
-
-   print(f'random pick: {random.choice(carpark1.plates)}')
+   carpark1.remove_car("test")
 
    print(f'===end of test===')
