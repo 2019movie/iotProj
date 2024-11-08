@@ -43,7 +43,10 @@ class CarPark:
          with self.log_file.open('a') as file:
             file.write(f"")
 
-
+   def _log_car_activity(self, plate, action):
+      current_datetime = datetime.datetime.now()
+      with self.log_file.open("a") as file:
+         file.write(f"{plate} {action} at {current_datetime:%Y-%m-%d %H:%M:%S}\n")
 
    def register(self, component):
       #method allow car park to register sensors and displays
@@ -62,7 +65,8 @@ class CarPark:
          current_datetime = datetime.datetime.now()
          new_car = Car(number_plate, current_datetime)
          self.cars.append(new_car)
-         self.add_log(f"{number_plate} entered carpark at {current_datetime.strftime('%A, %B %d, %Y at %I:%M %p')}\n")
+         #self.add_log(f"{number_plate} entered carpark at {current_datetime.strftime('%A, %B %d, %Y at %I:%M %p')}\n")
+         self._log_car_activity(number_plate, "entered")
       self.update_displays()
 
 
@@ -74,7 +78,8 @@ class CarPark:
             if car.plate_number == plate_number:
                current_datetime = datetime.datetime.now()
                self.cars.remove(car)
-               self.add_log(f"{plate_number} exited carpark at {current_datetime.strftime('%A, %B %d, %Y at %I:%M %p')}\n")
+               self._log_car_activity(plate_number, "exited")
+               #self.add_log(f"{plate_number} exited carpark at {current_datetime.strftime('%A, %B %d, %Y at %I:%M %p')}\n")
 
          self.update_displays()
       except ValueError:
