@@ -2,16 +2,16 @@ from sensor import Sensor, ExitSensor, EntrySensor
 from display import Display
 from car import Car
 import datetime
-import random
 from pathlib import Path
 
 
 class CarPark:
-   def __init__(self, location, capacity, sensors=None, displays=None, log_file="log.txt"):
+   def __init__(self, location, capacity
+                , log_file="log.txt"
+                , sensors=None, displays=None):
       self.location = "Unknown"
-      if log_file is not None and len(log_file) > 0:
-         self.log_file = Path(log_file)
-         self.add_log()
+      self.log_file = Path(log_file)
+      self.add_log()
 
       if location is not None and len(location) > 0:
          self.location = location
@@ -37,11 +37,12 @@ class CarPark:
    def add_log(self, message=""):
       if len(message) > 0:
          with self.log_file.open('a') as file:
-            file.write(f"\n{message}")
+            file.write(f"{message}")
+      else:
+         with self.log_file.open('a') as file:
+            file.write(f"")
 
-   def tearDown(self):
-      # Cleanup: remove the log file after the test
-      self.log_file.unlink(missing_ok=True)
+
 
    def register(self, component):
       #method allow car park to register sensors and displays
@@ -60,8 +61,8 @@ class CarPark:
          current_datetime = datetime.datetime.now()
          new_car = Car(number_plate, current_datetime)
          self.cars.append(new_car)
+         self.add_log(f"{number_plate} entered carpark at {current_datetime.strftime('%A, %B %d, %Y at %I:%M %p')}\n")
       self.update_displays()
-      self.add_log(f"{number_plate} enter carpark at {current_datetime.strftime('%A, %B %d, %Y at %I:%M %p')}")
 
 
    def remove_car(self, plate_number):
@@ -70,8 +71,10 @@ class CarPark:
          self.plates.remove(plate_number)
          for car in self.cars:
             if car.plate_number == plate_number:
-               print(f'{car} leaving carpark.')
+               current_datetime = datetime.datetime.now()
                self.cars.remove(car)
+               self.add_log(f"{plate_number} exited carpark at {current_datetime.strftime('%A, %B %d, %Y at %I:%M %p')}\n")
+
          self.update_displays()
       except ValueError:
          raise ValueError(f"{plate_number} not found in the plates list.")
@@ -112,7 +115,8 @@ class CarPark:
 
 
 if __name__ == "__main__":
-   carpark1 = CarPark("City", 100)
+   carpark1 = CarPark("City", 100,
+                      log_file ="log_3.txt")
    #print(carpark1)
    display1 = Display(carpark1, 1, "Hello World")
    #print(display1)
@@ -133,7 +137,8 @@ if __name__ == "__main__":
    # sensor_in.detect_vehicle()
    # sensor_in.detect_vehicle()
    # print(f'remaining car bay: {carpark1.remaining_car_bays()}')
-   # #carpark1.add_car("bb333")
+   carpark1.add_car("bb333")
+   carpark1.remove_car("bb333")
    # sensor_in.detect_vehicle()
    # print(f'Car "bb333" in carpark: {carpark1.is_plate_in_carpark("bb333")}')
    # sensor_out.detect_vehicle()
@@ -147,8 +152,12 @@ if __name__ == "__main__":
    # print(f'available_bays: {carpark1.available_bays}')
    #
    # print(f'random pick: {random.choice(carpark1.plates)}')
-
+   pathtest = Path("new_log.txt")
+   print(f"new log file exists> {pathtest.exists()}")
+   pathtest = Path("log3.txt")
+   print(f"log3.txt file exists> {pathtest.exists()}")
+   pathtest = Path("log_3.txt")
+   print(f"log_3.txt file exists> {pathtest.exists()}")
    carpark1.add_log()
-   carpark1.tearDown()
 
    print(f'===end of test===')

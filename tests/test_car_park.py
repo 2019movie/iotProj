@@ -5,7 +5,7 @@ from pathlib import Path
 class TestCarPark(unittest.TestCase):
     def setUp(self):
         self.car_park = CarPark("123 Example Street", 100)
-
+        self.test_log_file = "test_log.txt"
     def test_car_park_initialized_with_all_attributes(self):
         self.assertIsInstance(self.car_park, CarPark)
         self.assertEqual(self.car_park.location, "123 Example Street")
@@ -49,15 +49,40 @@ class TestCarPark(unittest.TestCase):
             self.car_park.register("test for not sensor or display")
 
     def test_log_file_created(self):
-        new_carpark = CarPark("123 Example Street", 100, log_file = "new_log.txt")
-        self.assertTrue(Path("new_log.txt").exists())
+        new_carpark = CarPark("123 Example Street"
+                              , 100
+                              , log_file=self.test_log_file)
+        self.assertTrue(Path(self.test_log_file).exists())
 
-    def tearDown(self):
-        """Clean up after the test."""
+
+
+    def test_car_logged_when_entering(self):
+        new_carpark = CarPark("123 Example Street"
+                              , 100
+                              , log_file=self.test_log_file)
+        self.car_park.add_car("NEW-001")
+        with self.car_park.log_file.open() as f:
+            last_line = f.readlines()[-1]
+        self.assertIn("NEW-001", last_line)  # check plate entered
+        self.assertIn("entered", last_line)  # check description
+        self.assertIn("\n", last_line)  # check entry has a new line
+
+    def test_car_logged_when_exiting(self):
+        new_carpark = CarPark("123 Example Street"
+                              , 100
+                              , log_file = self.test_log_file)
+        self.car_park.add_car("NEW-001")
+        self.car_park.remove_car("NEW-001")
+        with self.car_park.log_file.open() as f:
+            last_line = f.readlines()[-1]
+        self.assertIn("NEW-001", last_line)  # check plate entered
+        self.assertIn("exited", last_line)  # check description
+        self.assertIn("\n", last_line)  # check entry has a new line
+
+    def test_tear_down(self):
         # Remove the log file after the test
-        self.log_file.unlink(missing_ok=True)  # Delete file without raising an error if missing
-
-
+        if Path(self.test_log_file).exists():
+            Path(self.test_log_file).unlink()
 
 if __name__ == "__main__":
    unittest.main()
