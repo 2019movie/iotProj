@@ -33,20 +33,24 @@ class EntrySensor(Sensor):
 
     def update_car_park(self, plate_number):
         self.car_park.add_car(plate_number)
-        print(f"Incoming vehicle detected. Plate: {plate_number}")
+        return f"Incoming vehicle detected. Plate: {plate_number}"
 
 class ExitSensor(Sensor):
     def __str__(self):
         return f"Exit Sensor: Sensor id: {self.id}"
 
+    def detect_vehicle(self):
+        if len(self.car_park.plates)>0:
+            plate = self._scan_plate()
+            self.update_car_park(plate)
     def _scan_plate(self):
         try:
             return random.choice(self.car_park.plates)
         except IndexError:
-            print("no more car in carpark")
+            return "no more car in carpark"
     def update_car_park(self, plate_number):
         self.car_park.remove_car(plate_number)
-        print(f"Outgoing vehicle detected. Plate: {plate_number}")
+        return f"Outgoing vehicle detected. Plate: {plate_number}"
 
 
 if __name__ == "__main__":

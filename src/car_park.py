@@ -100,6 +100,7 @@ class CarPark:
 
          self.update_displays()
       except ValueError:
+         self._log_car_activity(plate_number, "unlisted car exited")
          raise ValueError(f"{plate_number} not found in the plates list.")
 
 

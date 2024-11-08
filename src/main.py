@@ -17,5 +17,4 @@ if __name__ == '__main__':
         print(f"    ->{display_moondalup.get_message_on_display()}<-")
     for car_number in range(2):
         sensor_exit.detect_vehicle()
-        display_moondalup.message
         print(f"    <-{display_moondalup.get_message_on_display()}->")
