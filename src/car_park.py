@@ -29,7 +29,7 @@ class CarPark:
       return f"Car park location ({str(self.location)}), capacity ({str(self.capacity)}). Has {str(len(self.displays))} display and {str(len(self.sensors))} sensors"
 
    def register(self, component):
-      '''method allow car park to register sensors and displays'''
+      #method allow car park to register sensors and displays
       if not isinstance(component, (Sensor, Display)):
          raise TypeError(f"Object must be type of Sensor or Display")
 
@@ -39,8 +39,8 @@ class CarPark:
          self.displays.append(component)
 
    def add_car(self, number_plate):
-      '''method will call when car enters the car park. It record the plate number and update display'''
-      if (not self.is_plate_in_carpark(number_plate)):
+      #method will call when car enters the car park. It records the plate number and update display
+      if not self.is_plate_in_carpark(number_plate):
          self.plates.append(number_plate)
          current_datetime = datetime.datetime.now()
          new_car = Car(number_plate, current_datetime)
@@ -49,19 +49,19 @@ class CarPark:
 
 
    def remove_car(self, plate_number):
-      '''method will call when car exits the car park. It remove the plate number and update display'''
+      #method will call when car exits the car park. It remove the plate number and update display
       try:
          self.plates.remove(plate_number)
          for car in self.cars:
             if car.plate_number == plate_number:
-               print(f'{car} leavning carpark.')
+               print(f'{car} leaving carpark.')
                self.cars.remove(car)
          self.update_displays()
       except ValueError:
-         return f"{number_plate} not found in the plates list."
+         return f"{plate_number} not found in the plates list."
 
    def is_plate_in_carpark(self, plate_number):
-      '''Method to check if a car's plate number is already in the list.'''
+      #Method to check if a car's plate number is already in the list.
       if plate_number in self.plates:
          return True  # Plate is already in the list
       else:
@@ -70,20 +70,27 @@ class CarPark:
    @property
    def available_bays(self):
      if self.capacity >= len(self.plates):
-        return (self.capacity - len(self.plates))
+        return self.capacity - len(self.plates)
      else:
         return 0
 
    def remaining_car_bays(self):
      if self.capacity >= len(self.plates):
-        return (self.capacity - len(self.plates))
+        return self.capacity - len(self.plates)
      else:
         return 0
 
    def update_displays(self):
-      for each_display in self.displays:
-         each_display.update(f"Remaining car bays: {str(self.remaining_car_bays)}")
-      # Todo: new display message  "Remaining car bays:  current time:  current temperature: "
+       current_datetime = datetime.datetime.now()
+
+       data = {
+           "available_bays": self.available_bays,
+           "temperature": 25,
+          "time": current_datetime
+       }
+
+       for each_display in self.displays:
+           each_display.update(data)
 
 if __name__ == "__main__":
    carpark1 = CarPark("City", 100)
