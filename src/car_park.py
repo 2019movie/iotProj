@@ -3,16 +3,17 @@ from display import Display
 from car import Car
 import datetime
 from pathlib import Path
+import json
 
 
 class CarPark:
    def __init__(self, location, capacity
                 , log_file=Path("log.txt")
                 , sensors=None, displays=None):
+      self.config_file = Path("config.json")
       self.log_file = log_file if isinstance(log_file, Path) else Path(log_file)
       self.log_file.touch(exist_ok=True)
       self.location = "Unknown"
-      #self.add_log()
 
       if location is not None and len(location) > 0:
          self.location = location
@@ -33,8 +34,16 @@ class CarPark:
          self.register(displays)
 
    def __str__(self):
-      return f"Car park location ({str(self.location)}), capacity ({str(self.capacity)}). Has {str(len(self.displays))} display and {str(len(self.sensors))} sensors"
+      return (f"Car park location ({str(self.location)})"
+              f", capacity ({str(self.capacity)})"
+              f". Has {str(len(self.displays))} display and"
+              f" {str(len(self.sensors))} sensors")
 
+   def write_config(self):
+      with open(self.config_file, "w") as file:
+         json.dump({"location": self.location,
+                    "capacity": self.capacity,
+                    "log_file": str(self.log_file)}, file)
    def add_log(self, message=""):
       if len(message) > 0:
          with self.log_file.open('a') as file:
@@ -166,5 +175,8 @@ if __name__ == "__main__":
    pathtest = Path("log_3.txt")
    print(f"log_3.txt file exists> {pathtest.exists()}")
    carpark1.add_log()
+
+   carpark1.write_config()
+   carpark2.write_config()
 
    print(f'===end of test===')
