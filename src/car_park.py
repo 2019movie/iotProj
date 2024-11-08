@@ -59,8 +59,7 @@ class CarPark:
                self.cars.remove(car)
          self.update_displays()
       except ValueError:
-         print("Value Error in remove_car")
-         return f"{plate_number} not found in the plates list."
+         raise ValueError(f"{plate_number} not found in the plates list.")
 
 
    def is_plate_in_carpark(self, plate_number):

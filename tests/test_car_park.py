@@ -38,9 +38,9 @@ class TestCarPark(unittest.TestCase):
          self.assertEqual(self.car_park.available_bays, 0)
 
       def test_removing_a_car_that_does_not_exist(self):
-         self.assertRaises(ValueError, remove_car, 'test')
-         # with self.assertRaises(ValueError):
-         #    self.car_park.remove_car("NO-1")
+         #self.assertRaises(ValueError, remove_car, 'test')
+         with self.assertRaises(ValueError):
+            self.car_park.remove_car("NO-1")
 
 
 if __name__ == "__main__":
