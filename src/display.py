@@ -1,4 +1,3 @@
-#from car_park import CarPark
 class Display:
     def __init__(self, car_park, id, message=None, is_on=False):
         self.car_park = car_park
@@ -32,8 +31,3 @@ class Display:
 
 if __name__ == "__main__":
     print(f'This is display class')
-    # carpark1 = CarPark("City", 100)
-    # display1 = Display(carpark1, 1, "Hello World")
-    # print(display1)
-    # display1.update("It is a test!")
-    # print(display1)
