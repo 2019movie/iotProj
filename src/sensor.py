@@ -12,6 +12,8 @@ class Sensor(ABC):
 
         self.is_active = is_active
 
+        self.register()
+
     def __str__(self):
         return f"Sensor id ({str(self.id)}), status ({str(self.is_active)}); part of carpark [{str(self.car_park)}]"
 
@@ -25,6 +27,14 @@ class Sensor(ABC):
     @abstractmethod
     def update_car_park(self, plate_number):
         pass
+
+    def register(self):
+        # register the sensor to car_park sensors list
+        if self.car_park:
+            self.car_park.sensors.append(self)
+        else:
+            # raise error
+            print(f'sensor cannot register to car_park sensors list.')
 
 class EntrySensor(Sensor):
     def __str__(self):

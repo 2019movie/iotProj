@@ -53,10 +53,6 @@ class TestCarPark(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.car_park.remove_car("NO-1")
 
-    def test_register_raises_type_error(self):
-        with self.assertRaises(TypeError):
-            self.car_park.register("test for not sensor or display")
-
     def test_log_file_created(self):
         new_carpark = CarPark("123 Example Street"
                               , 100

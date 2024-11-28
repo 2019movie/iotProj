@@ -6,7 +6,7 @@ class TestDisplay(unittest.TestCase):
     def setUp(self):
         self.car_park = CarPark("123 Example Street", 100)
         self.display = Display(self.car_park, 1, "Welcome to the car park", is_on=True)
-        self.car_park.register(self.display)
+
     def test_display_initialized_with_all_attributes(self):
         self.assertIsInstance(self.display, Display)
         self.assertEqual(self.display.id, 1)

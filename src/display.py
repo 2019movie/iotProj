@@ -13,6 +13,8 @@ class Display:
 
         self.is_on = is_on
 
+        self.register()
+
 
     def __str__(self):
         return f'Display id: {str(self.id)}, message: {str(self.message)}, power on: {str(self.is_on)}, part of {str(self.car_park)}'
@@ -30,6 +32,14 @@ class Display:
 
     def get_message_on_display(self):
         return self.message
+
+    def register(self):
+        # register the display to carpark display list
+        if self.car_park:
+            self.car_park.displays.append(self)
+        else:
+            # raise
+            print(f'display has no car_park to register.')
 
 if __name__ == "__main__":
     print(f'This is display class')

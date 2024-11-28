@@ -57,7 +57,7 @@ class CarPark:
       with self.log_file.open("a") as file:
          file.write(f"{plate} {action} at {current_datetime:%Y-%m-%d %H:%M:%S}\n")
 
-   def register(self, component):
+   '''def register(self, component):
       #method allow car park to register sensors and displays
       if not isinstance(component, (Sensor, Display)):
          raise TypeError(f"Object must be type of Sensor or Display")
@@ -65,7 +65,7 @@ class CarPark:
       if isinstance(component, Sensor):
          self.sensors.append(component)
       elif isinstance(component, Display):
-         self.displays.append(component)
+         self.displays.append(component)'''
 
    def add_car(self, number_plate):
       #method will call when car enters the car park. It records the plate number and update display
@@ -127,3 +127,10 @@ class CarPark:
 
 if __name__ == "__main__":
    print("this is the CarPark class")
+   car_park_moondalup = CarPark("Moondalup", 100, log_file="moondalup.txt")
+   sensor_entry = EntrySensor(car_park_moondalup, 1, True)
+   sensor_exit = ExitSensor(car_park_moondalup, 2, True)
+   sensor_exit = ExitSensor(car_park_moondalup, 3, True)
+   sensor_exit = ExitSensor(car_park_moondalup, 4, True)
+   display_moondalup = Display(car_park_moondalup, 1, message="Welcome to Moondalup", is_on=True)
+   print(car_park_moondalup)
