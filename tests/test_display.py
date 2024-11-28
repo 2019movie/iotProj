@@ -17,3 +17,7 @@ class TestDisplay(unittest.TestCase):
     def test_update(self):
         self.display.update({"message": "Goodbye"})
         self.assertEqual(self.display.message, "Goodbye")
+
+    def test_resigster_method(self):
+        self.assertIn(self.display, self.car_park.displays)
+        self.assertEqual(len(self.car_park.displays),1)

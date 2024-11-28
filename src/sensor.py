@@ -32,9 +32,6 @@ class Sensor(ABC):
         # register the sensor to car_park sensors list
         if self.car_park:
             self.car_park.sensors.append(self)
-        else:
-            # raise error
-            print(f'sensor cannot register to car_park sensors list.')
 
 class EntrySensor(Sensor):
     def __str__(self):

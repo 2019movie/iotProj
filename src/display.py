@@ -34,12 +34,9 @@ class Display:
         return self.message
 
     def register(self):
-        # register the display to carpark display list
+        # register the display to car_park display list
         if self.car_park:
             self.car_park.displays.append(self)
-        else:
-            # raise
-            print(f'display has no car_park to register.')
 
 if __name__ == "__main__":
     print(f'This is display class')

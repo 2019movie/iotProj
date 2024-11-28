@@ -7,7 +7,7 @@ class TestDisplay(unittest.TestCase):
         self.car_park = CarPark("123 Example Street", 100)
         self.sensor_exit = ExitSensor(self.car_park, 2, is_active=True)
         self.sensor_entry = EntrySensor(self.car_park, 1, is_active=True)
-        
+
     def test_EntrySensor_initialized_with_all_attributes(self):
         self.assertIsInstance(self.sensor_entry, EntrySensor)
         self.assertEqual(self.sensor_entry.id,1)
@@ -31,3 +31,9 @@ class TestDisplay(unittest.TestCase):
         self.assertEqual(len(self.car_park.plates),2)
         self.sensor_exit.detect_vehicle()
         self.assertEqual(len(self.car_park.plates),1)
+
+
+    def test_Sensor_resigster_method(self):
+        self.assertIn(self.sensor_entry, self.car_park.sensors)
+        self.assertIn(self.sensor_exit, self.car_park.sensors)
+        self.assertEqual(len(self.car_park.sensors),2)
